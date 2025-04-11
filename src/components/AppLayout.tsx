@@ -13,8 +13,7 @@ export const AppLayout = (): React.JSX.Element => {
 
   const handleItemSelect = (
     item: BaseDoc | FuncDoc | StructDoc, 
-    type: string, 
-    packageName: string, 
+    _: string, 
     filename: string
   ): void => {
     navigate(`/${filename}/${item.name}`)

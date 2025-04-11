@@ -27,7 +27,6 @@ interface PackageTreeProps {
   packageDocs: Record<string, FileDoc[]>;
   onItemClick?: (
     item: BaseDoc | FuncDoc | StructDoc, 
-    type: string, 
     packageName: string, 
     filename: string
   ) => void;
@@ -46,13 +45,12 @@ const PackageTree: React.FC<PackageTreeProps> = ({ packageDocs, onItemClick }) =
 
   const handleItemClick = (
     item: BaseDoc | FuncDoc | StructDoc, 
-    type: string, 
     packageName: string, 
     filename: string
   ): void => {
     setSelectedItem(`${packageName}-${filename}-${item.name}`);
     if (onItemClick) {
-      onItemClick(item, type, packageName, filename);
+      onItemClick(item, packageName, filename);
     }
   };
 
@@ -102,7 +100,7 @@ const PackageTree: React.FC<PackageTreeProps> = ({ packageDocs, onItemClick }) =
                           backgroundColor: 'rgba(25, 118, 210, 0.12)'
                         }
                       }}
-                      onClick={() => handleItemClick(docItem, docItem.type, packageName, file.filename)}
+                      onClick={() => handleItemClick(docItem, packageName, file.filename)}
                     >
                       <ListItemIcon>
                         {isStruct ? <ClassIcon color="secondary" /> : 
@@ -138,7 +136,6 @@ interface DocSidebarProps {
   packageDocs: Record<string, FileDoc[]>;
   onItemSelect?: (
     item: BaseDoc | FuncDoc | StructDoc, 
-    type: string, 
     packageName: string, 
     filename: string
   ) => void;
@@ -171,9 +168,9 @@ export const DocSidebar: React.FC<DocSidebarProps> = ({ packageDocs, onItemSelec
       <Box sx={{ overflow: 'auto' }}>
         <PackageTree 
           packageDocs={packageDocs} 
-          onItemClick={(item, type, packageName, filename) => {
+          onItemClick={(item, packageName, filename) => {
             if (onItemSelect) {
-              onItemSelect(item, type, packageName, filename);
+              onItemSelect(item, packageName, filename);
             }
           }}
         />
